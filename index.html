@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Photon</title>
+    <style>
+      body {
+        margin: 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="image-canvas"></canvas>
+
+    <script>
+      var remote = require('remote');
+      var Menu = remote.require('menu');
+      var dialog = remote.require('dialog');
+
+      var canvas = document.getElementById('image-canvas');
+      var context = canvas.getContext('2d');
+      var image = new Image();
+      image.onload = function() {
+        canvas.width = image.width;
+        canvas.height = image.height;
+        context.drawImage(image, 0, 0);
+      };
+      var menu = Menu.getApplicationMenu();
+      var menuTemplate = [
+        {
+          label: 'File',
+          submenu: [
+            {
+              label: 'Open',
+              click: function() {
+                var imagePaths = dialog.showOpenDialog({ properties: ['openFile']});
+                if (imagePaths)
+                  image.src = imagePaths[0];
+              }
+            },
+            {
+              label: 'Save'
+            },
+            {
+              label: 'Save As'
+            }
+          ]
+        }
+      ];
+      var fileMenu = Menu.buildFromTemplate(menuTemplate);
+      menu.insert(1, fileMenu.items[0]);
+      Menu.setApplicationMenu(menu);
+    </script>
+  </body>
+</html>
