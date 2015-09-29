@@ -16,6 +16,7 @@
       var remote = require('remote');
       var Menu = remote.require('menu');
       var dialog = remote.require('dialog');
+      var fs = require('fs');
 
       var canvas = document.getElementById('image-canvas');
       var context = canvas.getContext('2d');
@@ -42,7 +43,28 @@
               label: 'Save'
             },
             {
-              label: 'Save As'
+              label: 'Save As',
+              click: function() {
+                var imagePath = dialog.showSaveDialog({
+                  filters:
+                    [
+                      { name: 'jpg', extensions: ['jpg'] }
+                    ]
+                  });
+                if (!imagePath)
+                  return;
+
+                var dataUrl = canvas.toDataURL('image/jpeg');
+                var byteString = atob(dataUrl.split(',')[1]);
+                var buffer = new Buffer(byteString.length);
+                for (var i = 0; i < byteString.length; i++) {
+                  buffer.writeUInt8(byteString.charCodeAt(i), i);
+                }
+                fs.writeFile(imagePath, buffer, function(err){
+                  if (err)
+                    alert(err);
+                })
+              }
             }
           ]
         }
