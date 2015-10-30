@@ -1,0 +1,22 @@
+body {
+  margin: 0px;
+  font-family: arial;
+  background-color: #222;
+}
+#resize-dialog #resize-width {
+  width: 50px;
+}
+#resize-dialog #resize-height {
+  width: 50px;
+}
+#resize-dialog span {
+  padding-left: 7px;
+  padding-right: 10px;
+}
+.form-group {
+  float: left;
+}
+.form-group label {
+  font-size: 10px;
+  color: #aaa;
+}
