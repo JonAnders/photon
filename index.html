@@ -40,7 +40,7 @@
         <div class="form-group">
           <label for="resize-height">Height</label><br>
           <input id="resize-height" type="text" />
-          <button type="submit">Resize</button>
+          <button id="resize-submit" type="submit">Resize</button>
         </div>
       </form>
     </dialog>
@@ -112,8 +112,17 @@
                 var dialog = document.getElementById('resize-dialog');
                 var widthInput = document.getElementById('resize-width');
                 var heightInput = document.getElementById('resize-height');
+                var submit = document.getElementById('resize-submit');
+
                 widthInput.value = canvas.width;
                 heightInput.value = canvas.height;
+
+                submit.addEventListener('click', function() {
+                  var imageData = context.getImageData(0, 0, canvas.width - 1, canvas.height - 1);
+                  canvas.width = widthInput.value;
+                  canvas.height = heightInput.value;
+                  context.putImageData(imageData, 0, 0);
+                });
 
                 dialog.showModal();
               }
