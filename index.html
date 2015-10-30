@@ -12,6 +12,14 @@
   <body>
     <canvas id="image-canvas"></canvas>
 
+    <dialog id="resize-dialog">
+      <form method="dialog">
+        <input id="width" type="text" />
+        <input id="height" type="text" />
+        <button type="submit">Resize</button>
+      </form>
+    </dialog>
+
     <script>
       var remote = require('remote');
       var Menu = remote.require('menu');
@@ -72,7 +80,10 @@
           label: 'Image',
           submenu: [
             {
-              label: 'Resize canvas'
+              label: 'Resize canvas',
+              click: function() {
+                alert('Do it!')
+              }
             }
           ]
         }
