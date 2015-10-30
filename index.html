@@ -35,12 +35,12 @@
       <form method="dialog">
         <div class="form-group">
           <label for="resize-width">Width</label><br>
-          <input id="resize-width" type="text" />
+          <input id="resize-width" type="number" min="1" max="999999" required />
           <span>x</span>
         </div>
         <div class="form-group">
           <label for="resize-height">Height</label><br>
-          <input id="resize-height" type="text" />
+          <input id="resize-height" type="number" min="1" max="999999" required />
           <button id="resize-submit" type="submit">Resize</button>
         </div>
       </form>
