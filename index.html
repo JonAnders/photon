@@ -6,6 +6,24 @@
     <style>
       body {
         margin: 0px;
+        font-family: arial;
+      }
+      #resize-dialog #width {
+        width: 50px;
+      }
+      #resize-dialog #height {
+        width: 50px;
+      }
+      #resize-dialog span {
+        padding-left: 7px;
+        padding-right: 10px;
+      }
+      .form-group {
+        float: left;
+      }
+      .form-group label {
+        font-size: 10px;
+        color: #aaa;
       }
     </style>
   </head>
@@ -14,9 +32,16 @@
 
     <dialog id="resize-dialog">
       <form method="dialog">
-        <input id="width" type="text" />
-        <input id="height" type="text" />
-        <button type="submit">Resize</button>
+        <div class="form-group">
+          <label for="width">Width</label><br>
+          <input id="width" type="text" />
+          <span>x</span>
+        </div>
+        <div class="form-group">
+          <label for="height">Height</label><br>
+          <input id="height" type="text" />
+          <button type="submit">Resize</button>
+        </div>
       </form>
     </dialog>
 
@@ -82,7 +107,8 @@
             {
               label: 'Resize canvas',
               click: function() {
-                alert('Do it!')
+                var dialog = document.getElementById('resize-dialog');
+                dialog.showModal();
               }
             }
           ]
