@@ -33,13 +33,13 @@
     <dialog id="resize-dialog">
       <form method="dialog">
         <div class="form-group">
-          <label for="width">Width</label><br>
-          <input id="width" type="text" />
+          <label for="resize-width">Width</label><br>
+          <input id="resize-width" type="text" />
           <span>x</span>
         </div>
         <div class="form-group">
-          <label for="height">Height</label><br>
-          <input id="height" type="text" />
+          <label for="resize-height">Height</label><br>
+          <input id="resize-height" type="text" />
           <button type="submit">Resize</button>
         </div>
       </form>
@@ -52,6 +52,8 @@
       var fs = require('fs');
 
       var canvas = document.getElementById('image-canvas');
+      canvas.width = 0;
+      canvas.height = 0;
       var context = canvas.getContext('2d');
       var image = new Image();
       image.onload = function() {
@@ -108,6 +110,11 @@
               label: 'Resize canvas',
               click: function() {
                 var dialog = document.getElementById('resize-dialog');
+                var widthInput = document.getElementById('resize-width');
+                var heightInput = document.getElementById('resize-height');
+                widthInput.value = canvas.width;
+                heightInput.value = canvas.height;
+
                 dialog.showModal();
               }
             }
