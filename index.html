@@ -125,6 +125,16 @@
                   context.putImageData(imageData, 0, 0);
                 });
 
+                dialog.addEventListener('click', function(e) {
+                  var rect = dialog.getBoundingClientRect();
+                  var isInsideDialog = e.clientX >= rect.left
+                                       && e.clientX <= rect.left + rect.width
+                                       && e.clientY >= rect.top
+                                       && e.clientY <= rect.top + rect.height;
+                  if (!isInsideDialog)
+                    dialog.close();
+                });
+
                 dialog.showModal();
               }
             }
