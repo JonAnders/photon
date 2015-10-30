@@ -26,7 +26,7 @@
         canvas.height = image.height;
         context.drawImage(image, 0, 0);
       };
-      var menu = Menu.getApplicationMenu();
+      var appMenu = Menu.getApplicationMenu();
       var menuTemplate = [
         {
           label: 'File',
@@ -67,11 +67,20 @@
               }
             }
           ]
+        },
+        {
+          label: 'Image',
+          submenu: [
+            {
+              label: 'Resize canvas'
+            }
+          ]
         }
       ];
-      var fileMenu = Menu.buildFromTemplate(menuTemplate);
-      menu.insert(1, fileMenu.items[0]);
-      Menu.setApplicationMenu(menu);
+      var menu = Menu.buildFromTemplate(menuTemplate);
+      appMenu.insert(1, menu.items[0]);
+      appMenu.insert(3, menu.items[1]);
+      Menu.setApplicationMenu(appMenu);
     </script>
   </body>
 </html>
