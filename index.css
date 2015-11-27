@@ -3,6 +3,14 @@ body {
   font-family: arial;
   background-color: #222;
 }
+#image-canvas {
+  position: absolute;
+  z-index: 0;
+}
+#selection-canvas {
+  position: absolute;
+  z-index: 1;
+}
 #resize-dialog #resize-width {
   width: 50px;
 }
