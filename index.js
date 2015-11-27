@@ -3,35 +3,7 @@ var Menu = remote.require('menu');
 var dialog = remote.require('dialog');
 var fs = require('fs');
 
-var canvas = document.getElementById('image-canvas');
-var selectionCanvas = document.getElementById('selection-canvas');
-canvas.width = selectionCanvas.width = 0;
-canvas.height = selectionCanvas.height = 0;
-var context = canvas.getContext('2d');
-var selectionContext = selectionCanvas.getContext('2d');
-var image = new Image();
-image.onload = function() {
-  canvas.width = selectionCanvas.width = image.width;
-  canvas.height = selectionCanvas.height = image.height;
-  context.drawImage(image, 0, 0);
-};
-
-selectionCanvas.addEventListener('mousedown', function(e){
-  console.log('document mousedown');
-  photon.startSelection(e.clientX, e.clientY)
-});
-
-document.addEventListener('mouseup', function(e){
-  console.log('document mouseup');
-  photon.completeSelection(e.clientX, e.clientY);
-});
-
-selectionCanvas.addEventListener('keydown', function(e){
-  console.log('keydown');
-  if (e.keyCode == 27) {
-    photon.unselect();
-  }
-})
+photon.init();
 
 var appMenu = Menu.getApplicationMenu();
 var menuTemplate = [
@@ -43,7 +15,7 @@ var menuTemplate = [
         click: function() {
           var imagePaths = dialog.showOpenDialog({ properties: ['openFile']});
           if (imagePaths)
-            image.src = imagePaths[0];
+            photon.loadFromFile(imagePaths[0]);
         }
       },
       {
@@ -61,16 +33,7 @@ var menuTemplate = [
           if (!imagePath)
             return;
 
-          var dataUrl = canvas.toDataURL('image/jpeg');
-          var byteString = atob(dataUrl.split(',')[1]);
-          var buffer = new Buffer(byteString.length);
-          for (var i = 0; i < byteString.length; i++) {
-            buffer.writeUInt8(byteString.charCodeAt(i), i);
-          }
-          fs.writeFile(imagePath, buffer, function(err){
-            if (err)
-              alert(err);
-          })
+          photon.saveToFile(imagePath);
         }
       }
     ]
@@ -86,14 +49,11 @@ var menuTemplate = [
           var heightInput = document.getElementById('resize-height');
           var submit = document.getElementById('resize-submit');
 
-          widthInput.value = canvas.width;
-          heightInput.value = canvas.height;
+          widthInput.value = photon.getCanvasWidth();
+          heightInput.value = photon.getCanvasHeight();
 
           submit.addEventListener('click', function() {
-            var imageData = context.getImageData(0, 0, canvas.width - 1, canvas.height - 1);
-            canvas.width = widthInput.value;
-            canvas.height = heightInput.value;
-            context.putImageData(imageData, 0, 0);
+            photon.resizeCanvas(widthInput.value, heightInput.value);
           });
 
           dialog.addEventListener('click', function(e) {
