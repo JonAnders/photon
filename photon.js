@@ -16,11 +16,11 @@ var photon = (function(){
       canvas.width = selectionCanvas.width = 0;
       canvas.height = selectionCanvas.height = 0;
 
-      image.onload = function() {
+      image.addEventListener('load', function() {
         canvas.width = selectionCanvas.width = image.width;
         canvas.height = selectionCanvas.height = image.height;
         context.drawImage(image, 0, 0);
-      };
+      });
 
       selectionCanvas.addEventListener('mousedown', function(e){
         photon.startSelection(e.clientX, e.clientY)
